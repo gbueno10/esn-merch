@@ -3,6 +3,7 @@ import { getProducts } from "@/lib/stripe";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductCardSkeleton } from "@/components/ProductCardSkeleton";
 import { HeroBanner } from "@/components/HeroBanner";
+import { FAQ } from "@/components/FAQ";
 import { ShoppingBag } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -50,18 +51,23 @@ export default function HomePage() {
     <>
       <HeroBanner />
 
-      <div id="merch" className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        <div className="mb-6">
+      <div id="merch" className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+        <div className="mb-8">
           <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider leading-none mb-1">
             ESN Porto
           </p>
           <h2 className="text-2xl font-bold text-esn-dark-blue">Merch</h2>
+          <p className="text-sm text-slate-500 mt-2 max-w-2xl">
+            Take a piece of Porto with you. High-quality apparel and accessories for your Erasmus journey.
+          </p>
         </div>
 
         <Suspense fallback={<ProductGridSkeleton />}>
           <ProductGrid />
         </Suspense>
       </div>
+
+      <FAQ />
     </>
   );
 }
