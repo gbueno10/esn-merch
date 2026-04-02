@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import Image from "next/image";
-import { useCart, itemKey } from "@/store/cart";
+import { useCart } from "@/store/cart";
 import { createCheckoutSession } from "@/app/actions";
 import { formatCurrency } from "@/lib/format";
 import { X, Trash2, Plus, Minus, ShoppingBag, Loader2, ArrowRight } from "lucide-react";
@@ -73,10 +73,8 @@ export function CartDrawer() {
               </button>
             </div>
           ) : (
-            items.map((item) => {
-              const key = itemKey(item);
-              return (
-              <div key={key} className="flex gap-3">
+            items.map((item) => (
+              <div key={item.priceId} className="flex gap-3">
                 <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-slate-100 shrink-0">
                   {item.images[0] ? (
                     <Image
@@ -92,17 +90,12 @@ export function CartDrawer() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-bold text-slate-900 truncate">{item.name}</p>
-                  {(item.selectedSize || item.selectedColor) && (
-                    <p className="text-[10px] text-slate-400 uppercase tracking-wide mt-0.5">
-                      {[item.selectedSize, item.selectedColor].filter(Boolean).join(" · ")}
-                    </p>
-                  )}
                   <p className="text-xs text-slate-500">
                     {formatCurrency(item.unitAmount, item.currency)} each
                   </p>
                   <div className="flex items-center gap-1 mt-1.5">
                     <button
-                      onClick={() => updateQuantity(key, item.quantity - 1)}
+                      onClick={() => updateQuantity(item.priceId, item.quantity - 1)}
                       className="w-6 h-6 rounded-md border border-slate-200 flex items-center justify-center hover:bg-slate-50 active:scale-95 transition-all text-slate-500"
                     >
                       <Minus className="w-3 h-3" />
@@ -111,7 +104,7 @@ export function CartDrawer() {
                       {item.quantity}
                     </span>
                     <button
-                      onClick={() => updateQuantity(key, item.quantity + 1)}
+                      onClick={() => updateQuantity(item.priceId, item.quantity + 1)}
                       className="w-6 h-6 rounded-md border border-slate-200 flex items-center justify-center hover:bg-slate-50 active:scale-95 transition-all text-slate-500"
                     >
                       <Plus className="w-3 h-3" />
@@ -120,7 +113,7 @@ export function CartDrawer() {
                 </div>
                 <div className="flex flex-col items-end justify-between shrink-0">
                   <button
-                    onClick={() => removeItem(key)}
+                    onClick={() => removeItem(item.priceId)}
                     className="p-1 text-slate-300 hover:text-red-500 transition-colors"
                     aria-label="Remove"
                   >
@@ -131,7 +124,7 @@ export function CartDrawer() {
                   </span>
                 </div>
               </div>
-            )})
+            ))
           )}
         </div>
 

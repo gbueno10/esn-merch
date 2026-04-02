@@ -18,14 +18,7 @@ export type ProductWithPrice = {
   priceId: string;
   unitAmount: number;
   currency: string;
-  sizes: string[];   // from metadata: "XS,S,M,L,XL"
-  colors: string[];  // from metadata: "White,Black,Navy"
 };
-
-function parseOptions(value: string | undefined): string[] {
-  if (!value) return [];
-  return value.split(",").map((s) => s.trim()).filter(Boolean);
-}
 
 export async function getProducts(): Promise<ProductWithPrice[]> {
   const products = await stripe.products.list({
@@ -46,8 +39,6 @@ export async function getProducts(): Promise<ProductWithPrice[]> {
         priceId: price.id,
         unitAmount: price.unit_amount ?? 0,
         currency: price.currency,
-        sizes: parseOptions(product.metadata?.sizes),
-        colors: parseOptions(product.metadata?.colors),
       };
     });
 }
@@ -67,8 +58,6 @@ export async function getProduct(id: string): Promise<ProductWithPrice | null> {
       priceId: price.id,
       unitAmount: price.unit_amount ?? 0,
       currency: price.currency,
-      sizes: parseOptions(product.metadata?.sizes),
-      colors: parseOptions(product.metadata?.colors),
     };
   } catch {
     return null;
