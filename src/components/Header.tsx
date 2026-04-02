@@ -10,23 +10,25 @@ export function Header() {
   const count = totalItems();
 
   return (
-    <header className="sticky top-0 z-10 bg-white border-b border-slate-100 px-4 py-3 flex items-center justify-between">
-      <Link href="/">
-        <Image src="/esn-logo.png" alt="ESN Porto Store" width={96} height={40} className="object-contain" />
-      </Link>
+    <header className="sticky top-0 z-10 bg-white border-b border-slate-100">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+        <Link href="/">
+          <Image src="/esn-logo.png" alt="ESN Porto Store" width={96} height={40} className="object-contain" />
+        </Link>
 
-      <button
-        onClick={openCart}
-        className="relative p-2 rounded-lg hover:bg-slate-50 transition-colors text-esn-dark-blue"
-        aria-label="Open bag"
-      >
-        <ShoppingBag className="w-5 h-5" />
-        {count > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-esn-magenta text-white text-[9px] font-bold flex items-center justify-center">
-            {count > 9 ? "9+" : count}
-          </span>
-        )}
-      </button>
+        <button
+          onClick={openCart}
+          className="relative p-2 rounded-lg hover:bg-slate-50 transition-colors text-esn-dark-blue"
+          aria-label="Open bag"
+        >
+          <ShoppingBag className="w-5 h-5" />
+          {count > 0 && (
+            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-esn-magenta text-white text-[9px] font-bold flex items-center justify-center">
+              {count > 9 ? "9+" : count}
+            </span>
+          )}
+        </button>
+      </div>
     </header>
   );
 }

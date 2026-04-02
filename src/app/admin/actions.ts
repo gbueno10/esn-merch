@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
 import { supabase as serviceClient } from "@/lib/supabase";
+import { stripe } from "@/lib/stripe";
 
 async function requireAdmin() {
   const supabase = await createServerSupabaseClient();
@@ -34,45 +35,90 @@ export async function updateStock(priceId: string, newStock: number) {
   revalidatePath("/admin");
 }
 
+export type SaleItem = {
+  priceId: string;
+  productName: string;
+  variantLabel: string | null;
+  quantity: number;
+  unitAmount: number;
+};
+
 export async function registerOfficeSale(
-  priceId: string,
-  productName: string,
-  variantLabel: string | null,
-  quantity: number,
-  unitAmount: number,
+  items: SaleItem[],
   currency: string,
-  notes: string
+  paymentMethod: string,
+  buyerName: string
 ) {
-  await requireAdmin();
+  const user = await requireAdmin();
 
-  // Decrement stock
-  const { error: stockError } = await serviceClient.rpc("decrement_stock", {
-    p_price_id: priceId,
-    p_quantity: quantity,
-  });
-  if (stockError) throw new Error(stockError.message);
-
-  // Log the purchase
-  const { error: purchaseError } = await serviceClient
-    .from("purchases")
-    .insert({
-      customer_email: null,
-      items: [
-        {
-          priceId,
-          description: variantLabel
-            ? `${productName} (${variantLabel})`
-            : productName,
-          quantity,
-          amount: unitAmount * quantity,
-        },
-      ],
-      total_amount: unitAmount * quantity,
-      currency,
-      is_manual: true,
-      notes: notes || null,
+  // Decrement stock for all items
+  for (const item of items) {
+    const { error } = await serviceClient.rpc("decrement_stock", {
+      p_price_id: item.priceId,
+      p_quantity: item.quantity,
     });
-  if (purchaseError) throw new Error(purchaseError.message);
+    if (error) throw new Error(`Stock error for ${item.productName}: ${error.message}`);
+  }
+
+  // Find or create a reusable "Office Walk-in" customer
+  const existing = await stripe.customers.search({
+    query: 'metadata["role"]:"office_walkin"',
+    limit: 1,
+  });
+  const customer = existing.data[0] ?? await stripe.customers.create({
+    name: "Office Walk-in",
+    email: "merch@esnporto.org",
+    metadata: { role: "office_walkin" },
+  });
+
+  const notes = [
+    buyerName && `Buyer: ${buyerName}`,
+    `Payment: ${paymentMethod}`,
+  ].filter(Boolean).join(" | ");
+
+  // Clear any stale pending invoice items on this customer
+  const pendingItems = await stripe.invoiceItems.list({
+    customer: customer.id,
+    pending: true,
+    limit: 100,
+  });
+  for (const pi of pendingItems.data) {
+    await stripe.invoiceItems.del(pi.id);
+  }
+
+  // Create draft invoice first
+  const invoice = await stripe.invoices.create({
+    customer: customer.id,
+    auto_advance: false,
+    pending_invoice_items_behavior: "exclude",
+    currency,
+    metadata: {
+      source: "office",
+      registered_by: user.email ?? user.id,
+      notes,
+    },
+  });
+
+  // Add items directly to the draft invoice
+  for (const item of items) {
+    const description = item.variantLabel
+      ? `${item.productName} (${item.variantLabel})`
+      : item.productName;
+
+    await stripe.invoiceItems.create({
+      customer: customer.id,
+      invoice: invoice.id,
+      price: item.priceId,
+      quantity: item.quantity,
+      description,
+    });
+  }
+
+  // Finalize and mark as paid out of band
+  const finalized = await stripe.invoices.finalizeInvoice(invoice.id);
+  if (finalized.status !== "paid") {
+    await stripe.invoices.pay(finalized.id, { paid_out_of_band: true });
+  }
 
   revalidatePath("/admin");
   revalidatePath("/admin/purchases");

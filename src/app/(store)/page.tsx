@@ -28,7 +28,13 @@ async function ProductGrid() {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div className={`grid gap-6 ${
+      products.length === 1
+        ? "grid-cols-1 max-w-sm mx-auto"
+        : products.length === 2
+          ? "grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto"
+          : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto"
+    }`}>
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
@@ -38,8 +44,8 @@ async function ProductGrid() {
 
 function ProductGridSkeleton() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {Array.from({ length: 8 }).map((_, i) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto gap-6">
+      {Array.from({ length: 3 }).map((_, i) => (
         <ProductCardSkeleton key={i} />
       ))}
     </div>

@@ -4,6 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { createBrowserSupabaseClient } from "@/lib/supabase-browser";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, LogIn } from "lucide-react";
 
 export default function AdminLoginPage() {
@@ -19,10 +23,7 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     const supabase = createBrowserSupabaseClient();
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       setError(error.message);
@@ -35,7 +36,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-muted/30 flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <Image
@@ -46,72 +47,57 @@ export default function AdminLoginPage() {
             className="object-contain mx-auto mb-4"
           />
           <h1 className="text-xl font-bold text-esn-dark-blue">Admin Panel</h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             Sign in to manage inventory and sales
           </p>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-4"
-        >
-          <div className="space-y-1.5">
-            <label
-              htmlFor="email"
-              className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-esn-dark-blue/20 focus:border-esn-dark-blue transition-colors"
-              placeholder="you@esnporto.org"
-            />
-          </div>
+        <Card>
+          <CardContent className="pt-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  placeholder="you@esnporto.org"
+                />
+              </div>
 
-          <div className="space-y-1.5">
-            <label
-              htmlFor="password"
-              className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider"
-            >
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-esn-dark-blue/20 focus:border-esn-dark-blue transition-colors"
-              placeholder="••••••••"
-            />
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="••••••••"
+                />
+              </div>
 
-          {error && (
-            <p className="text-xs text-red-500 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
-              {error}
-            </p>
-          )}
+              {error && (
+                <p className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md px-3 py-2">
+                  {error}
+                </p>
+              )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="h-10 w-full bg-esn-dark-blue text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 hover:bg-esn-dark-blue/90 active:scale-[0.98] transition-all disabled:opacity-60 uppercase tracking-wide"
-          >
-            {loading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <>
-                <LogIn className="w-4 h-4" />
-                Sign in
-              </>
-            )}
-          </button>
-        </form>
+              <Button type="submit" disabled={loading} className="w-full bg-esn-dark-blue hover:bg-esn-dark-blue/90">
+                {loading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <>
+                    <LogIn className="w-4 h-4 mr-2" />
+                    Sign in
+                  </>
+                )}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

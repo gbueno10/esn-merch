@@ -37,27 +37,8 @@ export async function getProducts(): Promise<ProductWithPrice[]> {
     expand: ["data.default_price"],
   });
 
-  return products.data
-    .filter((p) => p.default_price != null)
-    .map((product) => {
-      const price = product.default_price as Stripe.Price;
-      return {
-        id: product.id,
-        slug: product.metadata?.slug || product.id,
-        name: product.name,
-        description: product.description,
-        images: product.images,
-        priceId: price.id,
-        unitAmount: price.unit_amount ?? 0,
-        currency: price.currency,
-        variants: [],
-        variantType: product.metadata?.sizes
-          ? "size"
-          : product.metadata?.colors
-            ? "color"
-            : null,
-      };
-    });
+  const filtered = products.data.filter((p) => p.default_price != null);
+  return Promise.all(filtered.map((product) => buildProduct(product)));
 }
 
 export async function getProduct(slugOrId: string): Promise<ProductWithPrice | null> {
