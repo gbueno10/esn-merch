@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --color-esn-dark-blue: #2E3192;
+  --color-esn-cyan: #00AEEF;
+  --color-esn-magenta: #EC008C;
+  --color-esn-green: #7AC143;
+  --color-esn-orange: #F47B20;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+}
+
+.esn-brand-stripe {
+  height: 4px;
+  width: 100%;
+  background: repeating-linear-gradient(
+    to right,
+    #00AEEF 0px,   #00AEEF 80px,
+    #EC008C 80px,  #EC008C 160px,
+    #7AC143 160px, #7AC143 240px,
+    #F47B20 240px, #F47B20 320px
+  );
+  background-size: 320px 100%;
+}
