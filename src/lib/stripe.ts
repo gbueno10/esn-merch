@@ -2,7 +2,7 @@ import "server-only";
 import Stripe from "stripe";
 
 if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("STRIPE_SECRET_KEY não definida nas variáveis de ambiente");
+  throw new Error("STRIPE_SECRET_KEY not defined in environment variables");
 }
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
@@ -18,7 +18,14 @@ export type ProductWithPrice = {
   priceId: string;
   unitAmount: number;
   currency: string;
+  sizes: string[];   // from metadata: "XS,S,M,L,XL"
+  colors: string[];  // from metadata: "White,Black,Navy"
 };
+
+function parseOptions(value: string | undefined): string[] {
+  if (!value) return [];
+  return value.split(",").map((s) => s.trim()).filter(Boolean);
+}
 
 export async function getProducts(): Promise<ProductWithPrice[]> {
   const products = await stripe.products.list({
@@ -39,6 +46,31 @@ export async function getProducts(): Promise<ProductWithPrice[]> {
         priceId: price.id,
         unitAmount: price.unit_amount ?? 0,
         currency: price.currency,
+        sizes: parseOptions(product.metadata?.sizes),
+        colors: parseOptions(product.metadata?.colors),
       };
     });
+}
+
+export async function getProduct(id: string): Promise<ProductWithPrice | null> {
+  try {
+    const product = await stripe.products.retrieve(id, {
+      expand: ["default_price"],
+    });
+    if (!product.active || !product.default_price) return null;
+    const price = product.default_price as Stripe.Price;
+    return {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      images: product.images,
+      priceId: price.id,
+      unitAmount: price.unit_amount ?? 0,
+      currency: price.currency,
+      sizes: parseOptions(product.metadata?.sizes),
+      colors: parseOptions(product.metadata?.colors),
+    };
+  } catch {
+    return null;
+  }
 }

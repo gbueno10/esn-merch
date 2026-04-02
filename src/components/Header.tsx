@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/store/cart";
 import { ShoppingBag } from "lucide-react";
@@ -10,18 +11,9 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-10 bg-white border-b border-slate-100 px-4 py-3 flex items-center justify-between">
-      <Link href="/" className="flex items-center gap-2.5">
-        <div className="w-9 h-9 bg-esn-dark-blue rounded-lg flex items-center justify-center">
-          <span className="text-white text-[10px] font-bold tracking-tight">ESN</span>
-        </div>
-        <div>
-          <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider leading-none mb-0.5">
-            Porto
-          </p>
-          <h1 className="text-base font-bold text-esn-dark-blue leading-none">
-            ESN Porto Store
-          </h1>
-        </div>
+      <Link href="/" className="flex items-center gap-1.5">
+        <Image src="/esn-logo.png" alt="ESN Porto" width={80} height={48} className="object-contain" />
+        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Store</span>
       </Link>
 
       <button

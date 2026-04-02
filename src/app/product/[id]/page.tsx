@@ -1,37 +1,14 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { stripe } from "@/lib/stripe";
+import { getProduct } from "@/lib/stripe";
 import { formatCurrency } from "@/lib/format";
 import { AddToCartButton } from "./AddToCartButton";
 import { ArrowLeft } from "lucide-react";
-import type { ProductWithPrice } from "@/lib/stripe";
-import type Stripe from "stripe";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
-
-async function getProduct(id: string): Promise<ProductWithPrice | null> {
-  try {
-    const product = await stripe.products.retrieve(id, {
-      expand: ["default_price"],
-    });
-    if (!product.active || !product.default_price) return null;
-    const price = product.default_price as Stripe.Price;
-    return {
-      id: product.id,
-      name: product.name,
-      description: product.description,
-      images: product.images,
-      priceId: price.id,
-      unitAmount: price.unit_amount ?? 0,
-      currency: price.currency,
-    };
-  } catch {
-    return null;
-  }
-}
 
 export default async function ProductPage({ params }: Props) {
   const { id } = await params;

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Instagram, Globe } from "lucide-react";
 
 const links = {
@@ -28,18 +29,9 @@ export function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 bg-esn-dark-blue rounded-lg flex items-center justify-center shrink-0">
-                <span className="text-white text-[10px] font-bold tracking-tight">ESN</span>
-              </div>
-              <div>
-                <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider leading-none mb-0.5">
-                  Porto
-                </p>
-                <span className="text-base font-bold text-esn-dark-blue leading-none">
-                  ESN Porto Store
-                </span>
-              </div>
+            <div className="flex items-center gap-1.5">
+              <Image src="/esn-logo.png" alt="ESN Porto" width={88} height={52} className="object-contain" />
+              <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Store</span>
             </div>
             <p className="text-xs text-slate-500 leading-relaxed max-w-xs">
               More than merch — a way to carry your Erasmus with you.

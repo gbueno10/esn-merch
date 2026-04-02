@@ -30,23 +30,24 @@ export function ProductCard({ product }: Props) {
             </div>
           )}
 
-          {/* Price badge */}
-          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm text-esn-dark-blue">
-            {formatCurrency(product.unitAmount, product.currency)}
-          </div>
         </div>
 
         {/* Info */}
         <div className="p-4 flex flex-col gap-1">
-          <h2 className="text-base font-bold text-slate-900 leading-snug line-clamp-2">
-            {product.name}
-          </h2>
+          <div className="flex items-start justify-between gap-2">
+            <h2 className="text-base font-bold text-slate-900 leading-snug line-clamp-2">
+              {product.name}
+            </h2>
+            <span className="text-base font-bold text-esn-dark-blue shrink-0">
+              {formatCurrency(product.unitAmount, product.currency)}
+            </span>
+          </div>
           {product.description && (
             <p className="text-xs text-slate-500 line-clamp-2 mt-0.5">
               {product.description}
             </p>
           )}
-          <div className="mt-3 h-9 w-full border border-slate-200 rounded-lg flex items-center justify-center text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:border-esn-dark-blue hover:text-esn-dark-blue transition-colors">
+          <div className="mt-3 h-10 w-full border-2 border-esn-dark-blue rounded-lg flex items-center justify-center text-[10px] font-bold uppercase tracking-wider text-esn-dark-blue">
             View details
           </div>
         </div>
