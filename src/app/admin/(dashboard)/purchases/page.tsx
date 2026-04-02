@@ -1,8 +1,8 @@
 import { stripe, getProducts } from "@/lib/stripe";
 import { getInventory } from "@/lib/supabase";
 import { formatCurrency } from "@/lib/format";
-import { OfficeSaleForm } from "../components/OfficeSaleForm";
-import { SalesChart } from "../components/SalesChart";
+import { OfficeSaleForm } from "../../components/OfficeSaleForm";
+import { SalesChart } from "../../components/SalesChart";
 import { Store, Globe } from "lucide-react";
 
 export const dynamic = "force-dynamic";

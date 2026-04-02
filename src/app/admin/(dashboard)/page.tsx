@@ -1,7 +1,7 @@
 import { getProducts } from "@/lib/stripe";
 import { getInventory } from "@/lib/supabase";
-import { InventoryTable } from "./components/InventoryTable";
-import { StockChart } from "./components/StockChart";
+import { InventoryTable } from "../components/InventoryTable";
+import { StockChart } from "../components/StockChart";
 
 export const dynamic = "force-dynamic";
 
