@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import Image from "next/image";
 import { useCart } from "@/store/cart";
-import { createCheckoutSession } from "@/app/actions";
+import { createCheckoutSession } from "@/app/(store)/actions";
 import { formatCurrency } from "@/lib/format";
 import { X, Trash2, Plus, Minus, ShoppingBag, Loader2, ArrowRight } from "lucide-react";
 

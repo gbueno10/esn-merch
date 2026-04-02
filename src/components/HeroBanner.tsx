@@ -28,7 +28,7 @@ const slides: Slide[] = [
   },
   {
     id: 2,
-    label: "Erasmus life",
+    label: "ESN Porto Store",
     title: "Wear the\nMemory",
     subtitle: "Hoodies, tees and more — take a piece of Porto back home.",
     cta: "Take a look",
@@ -38,7 +38,7 @@ const slides: Slide[] = [
   },
   {
     id: 3,
-    label: "2024 – 25",
+    label: "2025 – 26",
     title: "This Year's\nDrops",
     subtitle: "Exclusive items for this academic year. Once they're gone, they're gone.",
     cta: "See the drops",

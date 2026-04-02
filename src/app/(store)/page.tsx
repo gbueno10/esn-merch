@@ -58,7 +58,7 @@ export default function HomePage() {
           </p>
           <h2 className="text-2xl font-bold text-esn-dark-blue">Merch</h2>
           <p className="text-sm text-slate-500 mt-2 max-w-2xl">
-            Take a piece of Porto with you. High-quality apparel and accessories for your Erasmus journey.
+            Take a piece of Porto with you. High-quality apparel and accessories for your exchange experience.
           </p>
         </div>
 

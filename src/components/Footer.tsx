@@ -117,9 +117,6 @@ export function Footer() {
           </div>
         </div>
       </div>
-
-      {/* Brand stripe at the very bottom */}
-      <div className="esn-brand-stripe" />
     </footer>
   );
 }

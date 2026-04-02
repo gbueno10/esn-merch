@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Geist } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { CartDrawer } from "@/components/CartDrawer";
-import { Footer } from "@/components/Footer";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,18 +25,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <body className={inter.className}>
-        {/* Brand stripe — 4 cores ESN fixas no topo absoluto */}
         <div className="esn-brand-stripe fixed top-0 left-0 right-0 z-[100]" />
-
-        {/* Offset da stripe (4px) */}
-        <div className="pt-1">
-          <Header />
-          <CartDrawer />
-          <main>{children}</main>
-          <Footer />
-        </div>
+        <div className="pt-1">{children}</div>
       </body>
     </html>
   );
