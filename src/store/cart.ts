@@ -4,23 +4,17 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { ProductWithPrice } from "@/lib/stripe";
 
-export type CartItem = ProductWithPrice & {
+export type CartItem = Omit<ProductWithPrice, "variants" | "variantType"> & {
   quantity: number;
-  selectedSize?: string;
-  selectedColor?: string;
+  variantLabel: string | null;
 };
-
-// Unique key per product+variant combo
-function itemKey(p: ProductWithPrice & { selectedSize?: string; selectedColor?: string }) {
-  return [p.priceId, p.selectedSize ?? "", p.selectedColor ?? ""].join("|");
-}
 
 type CartStore = {
   items: CartItem[];
   isOpen: boolean;
-  addItem: (product: ProductWithPrice & { selectedSize?: string; selectedColor?: string }) => void;
-  removeItem: (key: string) => void;
-  updateQuantity: (key: string, quantity: number) => void;
+  addItem: (product: ProductWithPrice, priceId: string, variantLabel: string | null) => void;
+  removeItem: (priceId: string) => void;
+  updateQuantity: (priceId: string, quantity: number) => void;
   clearCart: () => void;
   openCart: () => void;
   closeCart: () => void;
@@ -34,28 +28,43 @@ export const useCart = create<CartStore>()(
       items: [],
       isOpen: false,
 
-      addItem: (product) => {
-        const key = itemKey(product);
+      addItem: (product, priceId, variantLabel) =>
         set((state) => {
-          const existing = state.items.find((i) => itemKey(i) === key);
+          const existing = state.items.find((i) => i.priceId === priceId);
           if (existing) {
             return {
               items: state.items.map((i) =>
-                itemKey(i) === key ? { ...i, quantity: i.quantity + 1 } : i
+                i.priceId === priceId ? { ...i, quantity: i.quantity + 1 } : i
               ),
             };
           }
-          return { items: [...state.items, { ...product, quantity: 1 }] };
-        });
-      },
+          const variant = product.variants.find((v) => v.priceId === priceId);
+          return {
+            items: [
+              ...state.items,
+              {
+                id: product.id,
+                slug: product.slug,
+                name: product.name,
+                description: product.description,
+                images: product.images,
+                priceId,
+                unitAmount: variant?.unitAmount ?? product.unitAmount,
+                currency: variant?.currency ?? product.currency,
+                quantity: 1,
+                variantLabel,
+              },
+            ],
+          };
+        }),
 
-      removeItem: (key) =>
-        set((state) => ({ items: state.items.filter((i) => itemKey(i) !== key) })),
+      removeItem: (priceId) =>
+        set((state) => ({ items: state.items.filter((i) => i.priceId !== priceId) })),
 
-      updateQuantity: (key, quantity) => {
-        if (quantity <= 0) { get().removeItem(key); return; }
+      updateQuantity: (priceId, quantity) => {
+        if (quantity <= 0) { get().removeItem(priceId); return; }
         set((state) => ({
-          items: state.items.map((i) => itemKey(i) === key ? { ...i, quantity } : i),
+          items: state.items.map((i) => i.priceId === priceId ? { ...i, quantity } : i),
         }));
       },
 
@@ -68,5 +77,3 @@ export const useCart = create<CartStore>()(
     { name: "esn-cart" }
   )
 );
-
-export { itemKey };

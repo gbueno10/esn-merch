@@ -2,23 +2,35 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { getProduct } from "@/lib/stripe";
+import { getStock, getInventory } from "@/lib/supabase";
 import { formatCurrency } from "@/lib/format";
 import { AddToCartButton } from "./AddToCartButton";
 import { ArrowLeft } from "lucide-react";
 
 type Props = {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export default async function ProductPage({ params }: Props) {
-  const { id } = await params;
-  const product = await getProduct(id);
+  const { slug } = await params;
 
+  const product = await getProduct(slug);
   if (!product) notFound();
+
+  // Get stock per variant, or single stock for products without variants
+  let stockMap: Record<string, number> = {};
+  if (product.variants.length > 0) {
+    const inventory = await getInventory();
+    for (const v of product.variants) {
+      stockMap[v.priceId] = inventory[v.priceId] ?? 0;
+    }
+  } else {
+    const stock = await getStock(product.priceId).catch(() => 0);
+    stockMap[product.priceId] = stock;
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
-      {/* Back */}
       <Link
         href="/"
         className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wider hover:text-esn-dark-blue transition-colors mb-6"
@@ -44,8 +56,6 @@ export default async function ProductPage({ params }: Props) {
               <span className="text-6xl">📦</span>
             </div>
           )}
-
-          {/* Price badge */}
           <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm text-esn-dark-blue">
             {formatCurrency(product.unitAmount, product.currency)}
           </div>
@@ -53,14 +63,9 @@ export default async function ProductPage({ params }: Props) {
 
         {/* Info */}
         <div className="flex flex-col gap-4 py-2">
-          <div>
-            <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider mb-1">
-              {product.currency.toUpperCase()}
-            </p>
-            <h1 className="text-2xl font-bold text-slate-900 leading-snug">
-              {product.name}
-            </h1>
-          </div>
+          <h1 className="text-2xl font-bold text-slate-900 leading-snug">
+            {product.name}
+          </h1>
 
           {product.description && (
             <p className="text-sm text-slate-500 leading-relaxed">
@@ -68,23 +73,17 @@ export default async function ProductPage({ params }: Props) {
             </p>
           )}
 
-          {/* Price breakdown */}
-          <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-2">
+          <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-1">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Price
-              </span>
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Price</span>
               <span className="text-xl font-bold text-esn-dark-blue">
                 {formatCurrency(product.unitAmount, product.currency)}
               </span>
             </div>
-            <p className="text-[10px] text-slate-400">
-              Shipping and taxes calculated at checkout
-            </p>
+            <p className="text-[10px] text-slate-400">Shipping and taxes calculated at checkout</p>
           </div>
 
-          {/* CTA — soft */}
-          <AddToCartButton product={product} />
+          <AddToCartButton product={product} stockMap={stockMap} />
         </div>
       </div>
     </div>

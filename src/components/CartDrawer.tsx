@@ -90,6 +90,11 @@ export function CartDrawer() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-bold text-slate-900 truncate">{item.name}</p>
+                  {item.variantLabel && (
+                    <p className="text-[10px] text-slate-400 uppercase tracking-wide mt-0.5">
+                      {item.variantLabel}
+                    </p>
+                  )}
                   <p className="text-xs text-slate-500">
                     {formatCurrency(item.unitAmount, item.currency)} each
                   </p>

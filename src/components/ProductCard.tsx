@@ -10,7 +10,7 @@ type Props = { product: ProductWithPrice };
 
 export function ProductCard({ product }: Props) {
   return (
-    <Link href={`/product/${product.id}`}>
+    <Link href={`/product/${product.slug}`}>
       <article className="bg-white rounded-xl overflow-hidden border border-slate-100 shadow-sm flex flex-col cursor-pointer hover:shadow-md transition-shadow">
         {/* Image */}
         <div className="relative aspect-square bg-slate-50">
