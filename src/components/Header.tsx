@@ -11,9 +11,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-10 bg-white border-b border-slate-100 px-4 py-3 flex items-center justify-between">
-      <Link href="/" className="flex items-center gap-1.5">
-        <Image src="/esn-logo.png" alt="ESN Porto" width={80} height={48} className="object-contain" />
-        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Store</span>
+      <Link href="/">
+        <Image src="/esn-logo.png" alt="ESN Porto Store" width={96} height={40} className="object-contain" />
       </Link>
 
       <button

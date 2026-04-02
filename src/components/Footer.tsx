@@ -29,10 +29,7 @@ export function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-1.5">
-              <Image src="/esn-logo.png" alt="ESN Porto" width={88} height={52} className="object-contain" />
-              <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Store</span>
-            </div>
+            <Image src="/esn-logo.png" alt="ESN Porto Store" width={110} height={48} className="object-contain" />
             <p className="text-xs text-slate-500 leading-relaxed max-w-xs">
               More than merch — a way to carry your Erasmus with you.
               Every piece tells a story from your time in Porto.

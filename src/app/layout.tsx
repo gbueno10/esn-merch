@@ -9,7 +9,14 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "ESN Porto Store",
-  description: "Official ESN Porto merchandise store",
+  description: "Official merch for Erasmus students in Porto. Wear your Erasmus, take a piece of Porto home.",
+  openGraph: {
+    title: "ESN Porto Store",
+    description: "Official merch for Erasmus students in Porto.",
+    siteName: "ESN Porto Store",
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
