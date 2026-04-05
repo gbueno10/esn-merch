@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Geist } from "next/font/google";
+import { Bebas_Neue, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-display",
+});
 
-const inter = Inter({ subsets: ["latin"] });
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "ESN Porto Store",
@@ -25,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className={inter.className}>
+    <html lang="en" className={cn(bebasNeue.variable, dmSans.variable)}>
+      <body>
         <div className="esn-brand-stripe fixed top-0 left-0 right-0 z-[100]" />
         <div className="pt-1">{children}</div>
       </body>

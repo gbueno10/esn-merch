@@ -11,7 +11,7 @@ export default function StoreLayout({
     <>
       <Header />
       <CartDrawer />
-      <main>{children}</main>
+      <main className="pt-16">{children}</main>
       <Footer />
     </>
   );

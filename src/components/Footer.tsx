@@ -23,20 +23,25 @@ const socials = [
 
 export function Footer() {
   return (
-    <footer className="bg-white border-t border-slate-100 mt-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <footer className="bg-[#0D0D0D] text-white">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-14 pb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
 
           {/* Brand */}
-          <div className="lg:col-span-2 space-y-4">
-            <Image src="/esn-logo.png" alt="ESN Porto Store" width={110} height={48} className="object-contain" />
-            <p className="text-xs text-slate-500 leading-relaxed max-w-xs">
+          <div className="lg:col-span-2 space-y-5">
+            <Image
+              src="/esn-logo.png"
+              alt="ESN Porto Store"
+              width={100}
+              height={44}
+              className="object-contain brightness-0 invert opacity-90"
+            />
+            <p className="text-sm text-white/40 leading-relaxed max-w-xs">
               More than merch — a way to carry your Erasmus with you.
               Every piece tells a story from your time in Porto.
             </p>
 
-            {/* Socials */}
-            <div className="flex items-center gap-2 pt-1">
+            <div className="flex items-center gap-2">
               {socials.map(({ label, href, icon: Icon }) => (
                 <a
                   key={label}
@@ -44,20 +49,20 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-8 h-8 rounded-lg border border-slate-100 flex items-center justify-center text-slate-400 hover:text-esn-dark-blue hover:border-esn-dark-blue transition-colors"
+                  className="w-8 h-8 border border-white/10 flex items-center justify-center text-white/40 hover:text-esn-cyan hover:border-esn-cyan/40 transition-colors"
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3.5 h-3.5" />
                 </a>
               ))}
             </div>
           </div>
 
           {/* Explore */}
-          <div className="space-y-3">
-            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+          <div className="space-y-4">
+            <p className="text-[10px] font-bold text-white/25 uppercase tracking-[0.2em]">
               Explore
             </p>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               {links.explore.map(({ label, href, external }) => (
                 <li key={label}>
                   {external ? (
@@ -65,14 +70,14 @@ export function Footer() {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-slate-500 hover:text-esn-dark-blue transition-colors"
+                      className="text-sm text-white/45 hover:text-white transition-colors"
                     >
                       {label}
                     </a>
                   ) : (
                     <Link
                       href={href}
-                      className="text-xs text-slate-500 hover:text-esn-dark-blue transition-colors"
+                      className="text-sm text-white/45 hover:text-white transition-colors"
                     >
                       {label}
                     </Link>
@@ -83,16 +88,16 @@ export function Footer() {
           </div>
 
           {/* Help */}
-          <div className="space-y-3">
-            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+          <div className="space-y-4">
+            <p className="text-[10px] font-bold text-white/25 uppercase tracking-[0.2em]">
               Help
             </p>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               {links.help.map(({ label, href }) => (
                 <li key={label}>
                   <Link
                     href={href}
-                    className="text-xs text-slate-500 hover:text-esn-dark-blue transition-colors"
+                    className="text-sm text-white/45 hover:text-white transition-colors"
                   >
                     {label}
                   </Link>
@@ -103,15 +108,15 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[10px] text-slate-400 uppercase tracking-wider">
+        <div className="pt-6 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-[10px] text-white/20 uppercase tracking-wider">
             © {new Date().getFullYear()} ESN Porto. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
-            <Link href="/privacy" className="text-[10px] text-slate-400 hover:text-slate-600 uppercase tracking-wider transition-colors">
+          <div className="flex items-center gap-5">
+            <Link href="/privacy" className="text-[10px] text-white/20 hover:text-white/50 uppercase tracking-wider transition-colors">
               Privacy
             </Link>
-            <Link href="/terms" className="text-[10px] text-slate-400 hover:text-slate-600 uppercase tracking-wider transition-colors">
+            <Link href="/terms" className="text-[10px] text-white/20 hover:text-white/50 uppercase tracking-wider transition-colors">
               Terms
             </Link>
           </div>

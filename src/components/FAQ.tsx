@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
@@ -40,52 +40,55 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-      <div className="mb-8">
-        <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider leading-none mb-1">
-          Got questions?
-        </p>
-        <h2 className="text-2xl font-bold text-esn-dark-blue">FAQ</h2>
-        <p className="text-sm text-slate-500 mt-2">
-          Everything you need to know about ordering and picking up your merch.
-        </p>
-      </div>
+    <div className="bg-slate-50 border-t border-slate-100">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+          {/* Left label */}
+          <div className="lg:col-span-1">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">
+              Got questions?
+            </p>
+            <h2 className="font-display text-5xl sm:text-6xl text-esn-dark-blue uppercase tracking-wide leading-none mb-4">
+              FAQ
+            </h2>
+            <p className="text-sm text-slate-400 leading-relaxed">
+              Everything you need to know about ordering and picking up your merch.
+            </p>
+          </div>
 
-      <div className="space-y-2">
-        {faqs.map((faq, i) => {
-          const isOpen = open === i;
-          return (
-            <div
-              key={i}
-              className="bg-esn-orange/5 border border-esn-orange/15 rounded-xl overflow-hidden"
-            >
-              <button
-                onClick={() => setOpen(isOpen ? null : i)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-100/50 transition-colors"
-              >
-                <span className="text-sm font-semibold text-slate-900 pr-4">
-                  {faq.question}
-                </span>
-                <ChevronDown
-                  className={`w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200 ${
-                    isOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-              <div
-                className={`grid transition-all duration-200 ${
-                  isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                }`}
-              >
-                <div className="overflow-hidden">
-                  <p className="px-5 pb-4 text-sm text-slate-500 leading-relaxed">
-                    {faq.answer}
-                  </p>
+          {/* Accordion */}
+          <div className="lg:col-span-2 divide-y divide-slate-200">
+            {faqs.map((faq, i) => {
+              const isOpen = open === i;
+              return (
+                <div key={i}>
+                  <button
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    className="w-full flex items-center justify-between py-5 text-left group"
+                  >
+                    <span className="text-sm font-semibold text-slate-800 pr-8 group-hover:text-esn-dark-blue transition-colors">
+                      {faq.question}
+                    </span>
+                    <span className="shrink-0 w-5 h-5 flex items-center justify-center text-slate-400 group-hover:text-esn-dark-blue transition-colors">
+                      {isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                    </span>
+                  </button>
+                  <div
+                    className={`grid transition-all duration-200 ${
+                      isOpen ? "grid-rows-[1fr] pb-5" : "grid-rows-[0fr]"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="text-sm text-slate-500 leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          );
-        })}
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );
