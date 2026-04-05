@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 export function HeroBanner() {
   return (
     <section className="-mt-16 relative w-full h-screen min-h-[600px] overflow-hidden bg-neutral-900">
-      {/* Hero photo */}
+      {/* Hero photo — desktop */}
       <Image
         src="/IMG_0877.png"
         alt="ESN Porto students wearing merch"
@@ -15,7 +15,17 @@ export function HeroBanner() {
         priority
         quality={100}
         sizes="100vw"
-        className="object-cover object-[center_30%]"
+        className="object-cover object-[center_30%] hidden sm:block"
+      />
+      {/* Hero photo — mobile */}
+      <Image
+        src="/IMG_0877_mobile.png"
+        alt="ESN Porto students wearing merch"
+        fill
+        priority
+        quality={100}
+        sizes="100vw"
+        className="object-cover object-center sm:hidden"
       />
 
       {/* Gradient layers for editorial depth */}
