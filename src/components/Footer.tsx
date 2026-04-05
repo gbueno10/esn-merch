@@ -8,12 +8,6 @@ const links = {
     { label: "About ESN Porto", href: "https://esnporto.org", external: true },
     { label: "Upcoming events", href: "https://esnporto.org/events", external: true },
   ],
-  help: [
-    { label: "How it works", href: "/how-it-works" },
-    { label: "Shipping info", href: "/shipping" },
-    { label: "Returns", href: "/returns" },
-    { label: "Contact us", href: "mailto:store@esnporto.org" },
-  ],
 };
 
 const socials = [
@@ -25,7 +19,7 @@ export function Footer() {
   return (
     <footer className="bg-[#0D0D0D] text-white">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-14 pb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
 
           {/* Brand */}
           <div className="lg:col-span-2 space-y-5">
@@ -87,24 +81,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Help */}
-          <div className="space-y-4">
-            <p className="text-[10px] font-bold text-white/25 uppercase tracking-[0.2em]">
-              Help
-            </p>
-            <ul className="space-y-2.5">
-              {links.help.map(({ label, href }) => (
-                <li key={label}>
-                  <Link
-                    href={href}
-                    className="text-sm text-white/45 hover:text-white transition-colors"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
 
         {/* Bottom bar */}
