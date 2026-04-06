@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, DM_Sans } from "next/font/google";
+import { Righteous, Quicksand } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const bebasNeue = Bebas_Neue({
+const righteous = Righteous({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-display",
 });
 
-const dmSans = DM_Sans({
+const quicksand = Quicksand({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cn(bebasNeue.variable, dmSans.variable)}>
+    <html lang="en" className={cn(righteous.variable, quicksand.variable)}>
       <body>
         <div className="esn-brand-stripe fixed top-0 left-0 right-0 z-[100]" />
         <div className="pt-1">{children}</div>

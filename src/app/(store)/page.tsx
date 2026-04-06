@@ -64,7 +64,7 @@ export default function HomePage() {
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">
               ESN Porto
             </p>
-            <h2 className="font-display text-5xl sm:text-6xl text-esn-dark-blue uppercase tracking-wide leading-none">
+            <h2 className="font-display text-3xl sm:text-4xl text-esn-dark-blue uppercase tracking-wide leading-none">
               The Collection
             </h2>
             <p className="text-sm text-slate-400 mt-3 max-w-md leading-relaxed">

@@ -19,9 +19,9 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-1 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-1 left-0 right-0 z-50 transition-all duration-200 ${
         scrolled
-          ? "bg-white/97 backdrop-blur-sm border-b border-slate-100 shadow-[0_1px_20px_rgba(0,0,0,0.06)]"
+          ? "bg-white/97 backdrop-blur-sm shadow-sm"
           : "bg-transparent"
       }`}
     >

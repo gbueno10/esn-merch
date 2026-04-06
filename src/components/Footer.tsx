@@ -17,7 +17,7 @@ const socials = [
 
 export function Footer() {
   return (
-    <footer className="bg-[#0D0D0D] text-white">
+    <footer className="bg-[#F5F5F5] text-slate-800">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-14 pb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
 
@@ -28,9 +28,9 @@ export function Footer() {
               alt="ESN Porto Store"
               width={100}
               height={44}
-              className="object-contain brightness-0 invert opacity-90"
+              className="object-contain opacity-90"
             />
-            <p className="text-sm text-white/40 leading-relaxed max-w-xs">
+            <p className="text-sm text-slate-500 leading-relaxed max-w-xs">
               More than merch — a way to carry your Erasmus with you.
               Every piece tells a story from your time in Porto.
             </p>
@@ -43,7 +43,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-8 h-8 border border-white/10 flex items-center justify-center text-white/40 hover:text-esn-cyan hover:border-esn-cyan/40 transition-colors"
+                  className="w-8 h-8 border border-slate-300 rounded-full flex items-center justify-center text-slate-400 hover:text-esn-cyan hover:border-esn-cyan/40 transition-colors"
                 >
                   <Icon className="w-3.5 h-3.5" />
                 </a>
@@ -53,7 +53,7 @@ export function Footer() {
 
           {/* Explore */}
           <div className="space-y-4">
-            <p className="text-[10px] font-bold text-white/25 uppercase tracking-[0.2em]">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
               Explore
             </p>
             <ul className="space-y-2.5">
@@ -64,14 +64,14 @@ export function Footer() {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-white/45 hover:text-white transition-colors"
+                      className="text-sm text-slate-500 hover:text-slate-800 transition-colors"
                     >
                       {label}
                     </a>
                   ) : (
                     <Link
                       href={href}
-                      className="text-sm text-white/45 hover:text-white transition-colors"
+                      className="text-sm text-slate-500 hover:text-slate-800 transition-colors"
                     >
                       {label}
                     </Link>
@@ -84,15 +84,15 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-6 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[10px] text-white/20 uppercase tracking-wider">
+        <div className="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-[10px] text-slate-400 uppercase tracking-wider">
             © {new Date().getFullYear()} ESN Porto. All rights reserved.
           </p>
           <div className="flex items-center gap-5">
-            <Link href="/privacy" className="text-[10px] text-white/20 hover:text-white/50 uppercase tracking-wider transition-colors">
+            <Link href="/privacy" className="text-[10px] text-slate-400 hover:text-slate-600 uppercase tracking-wider transition-colors">
               Privacy
             </Link>
-            <Link href="/terms" className="text-[10px] text-white/20 hover:text-white/50 uppercase tracking-wider transition-colors">
+            <Link href="/terms" className="text-[10px] text-slate-400 hover:text-slate-600 uppercase tracking-wider transition-colors">
               Terms
             </Link>
           </div>

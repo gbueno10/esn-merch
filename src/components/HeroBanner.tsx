@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 
 export function HeroBanner() {
   return (
-    <section className="-mt-16 relative w-full h-screen min-h-[600px] overflow-hidden bg-neutral-900">
+    <section className="-mt-16 relative w-full h-[80vh] min-h-[500px] overflow-hidden bg-neutral-900">
       {/* Hero photo — desktop */}
       <Image
         src="/IMG_0877.png"
@@ -28,6 +28,9 @@ export function HeroBanner() {
         className="object-cover object-center sm:hidden"
       />
 
+      {/* Color tint overlay */}
+      <div className="absolute inset-0 bg-esn-dark-blue/25 mix-blend-multiply" />
+
       {/* Gradient layers for editorial depth */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-black/10" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
@@ -45,7 +48,7 @@ export function HeroBanner() {
           </div>
 
           {/* Headline */}
-          <h1 className="font-display text-[clamp(4rem,10vw,9rem)] leading-[0.88] text-white uppercase mb-5 tracking-wide">
+          <h1 className="font-display text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.95] text-white uppercase mb-5 tracking-wide">
             Wear the
             <br />
             <span className="text-esn-cyan">Experience</span>
@@ -61,7 +64,7 @@ export function HeroBanner() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <Link
               href="#merch"
-              className="inline-flex items-center gap-2.5 bg-esn-cyan text-white font-bold text-[11px] uppercase tracking-[0.18em] px-7 py-3.5 hover:bg-[#009fd6] active:scale-[0.98] transition-all group"
+              className="inline-flex items-center gap-2.5 bg-esn-cyan text-white font-bold text-[11px] uppercase tracking-[0.18em] px-7 py-3.5 rounded-full hover:bg-[#009fd6] active:scale-[0.98] transition-all group"
             >
               Shop the drop
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -74,13 +77,6 @@ export function HeroBanner() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-none">
-        <div
-          className="w-px bg-white/30"
-          style={{ height: "36px", animation: "scroll-pulse 2.2s ease-in-out infinite" }}
-        />
-      </div>
     </section>
   );
 }

@@ -48,7 +48,7 @@ export function FAQ() {
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">
               Got questions?
             </p>
-            <h2 className="font-display text-5xl sm:text-6xl text-esn-dark-blue uppercase tracking-wide leading-none mb-4">
+            <h2 className="font-display text-3xl sm:text-4xl text-esn-dark-blue uppercase tracking-wide leading-none mb-4">
               FAQ
             </h2>
             <p className="text-sm text-slate-400 leading-relaxed">
