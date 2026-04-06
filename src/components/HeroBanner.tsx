@@ -9,21 +9,19 @@ export function HeroBanner() {
     <section className="-mt-16 relative w-full h-[80vh] min-h-[500px] overflow-hidden bg-neutral-900">
       {/* Hero photo — desktop */}
       <Image
-        src="/IMG_0877.png"
+        src="/hero-desktop.webp"
         alt="ESN Porto students wearing merch"
         fill
         priority
-        quality={100}
         sizes="100vw"
         className="object-cover object-[center_30%] hidden sm:block"
       />
       {/* Hero photo — mobile */}
       <Image
-        src="/IMG_0877_mobile.png"
+        src="/hero-mobile.webp"
         alt="ESN Porto students wearing merch"
         fill
         priority
-        quality={100}
         sizes="100vw"
         className="object-cover object-center sm:hidden"
       />
